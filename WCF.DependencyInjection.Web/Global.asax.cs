@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using Autofac.Integration.Wcf;
+using Autofac;
 
 namespace WCF.DependencyInjection.Web
 {
@@ -8,6 +9,8 @@ namespace WCF.DependencyInjection.Web
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            IContainer container = Bootstrapper.BuildContainer();
+            AutofacHostFactory.Container = container;
         }
 
         protected void Session_Start(object sender, EventArgs e)

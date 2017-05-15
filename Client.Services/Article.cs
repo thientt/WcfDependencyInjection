@@ -22,7 +22,6 @@ namespace Client.Entities
         [DataMember]
         public int BlogId { get; set; }
 
-        [DataMember]
         public int ContentLength => Contents.Length;
 
         protected override IValidator GetValidator()

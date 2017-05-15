@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Article.cs" />
+    <Compile Include="Base.cs" />
     <Compile Include="Blog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

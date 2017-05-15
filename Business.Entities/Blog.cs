@@ -4,11 +4,8 @@ using Core.Utilities;
 namespace Business.Entities
 {
     [DataContract(Namespace = Proxy.Namespace)]
-    public class Blog : IExtensibleDataObject
+    public class Blog : Base
     {
-        [DataMember]
-        public int Id { get; set; }
-
         [DataMember]
         public string Name { get; set; }
 
@@ -17,7 +14,5 @@ namespace Business.Entities
 
         [DataMember]
         public string Owner { get; set; }
-
-        public ExtensionDataObject ExtensionData { get; set; }
     }
 }
