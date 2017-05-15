@@ -11,8 +11,8 @@ namespace WCF.DependencyInjection.Launcher
             var builder = Bootstrapper.BuildContainer();
             var client = builder.Resolve<ClientInjectionClass>();
 
-            var articles = client.GetArticleById(1);
-            Console.WriteLine(articles.Title);
+            //var articles = client.GetArticleById(1);
+            //Console.WriteLine(articles.Title);
 
             var blogs = client.GetBlogById(1);
             Console.WriteLine(blogs?.Owner);
