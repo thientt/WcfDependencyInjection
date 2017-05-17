@@ -10,7 +10,7 @@ namespace Client.Entities
         [DataMember]
         public int Id { get; set; }
 
-        [DataMember]
+        [IgnoreDataMember]
         public ExtensionDataObject ExtensionData { get; set; }
     }
 }

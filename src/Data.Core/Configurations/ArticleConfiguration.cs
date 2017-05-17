@@ -7,7 +7,7 @@ namespace Data.Core.Configurations
     {
         public ArticleConfiguration()
         {
-            HasKey(a => a.Id);
+            HasKey(a => a.Id).Property(a => a.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(a => a.Title).HasMaxLength(100);
             Property(a => a.Contents).IsRequired();
             Property(a => a.Author).IsRequired().HasMaxLength(50);

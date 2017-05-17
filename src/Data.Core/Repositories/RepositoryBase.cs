@@ -34,6 +34,7 @@ namespace Data.Core.Repositories
         public void Add(TEntity entity)
         {
             _dbSet.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public void Delete(Expression<Func<TEntity, bool>> where)

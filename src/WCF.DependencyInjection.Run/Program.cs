@@ -1,5 +1,7 @@
 ﻿using System;
 using Autofac;
+using WCF.DependencyInjection.Launcher.Channel;
+using Faker;
 
 namespace WCF.DependencyInjection.Launcher
 {
@@ -9,14 +11,26 @@ namespace WCF.DependencyInjection.Launcher
         {
             //Register IoC
             var builder = Bootstrapper.BuildContainer();
-            var client = builder.Resolve<ClientInjectionClass>();
+            var blogChannel = builder.Resolve<BlogChannel>();
+            AddBlog(blogChannel);
 
-            var articles = client.GetArticleById(1);
-            Console.WriteLine(articles.Title);
-
-            var blogs = client.GetBlogById(1);
-            Console.WriteLine(blogs?.Owner);
             Console.Read();
+        }
+
+        private static void AddBlog(BlogChannel channel)
+        {
+            channel.Add(new Client.Entities.Blog
+            {
+                Url = InternetFaker.Url(),
+                Id = NumberFaker.Number(3, 1000),
+                Name = NameFaker.Name(),
+                Owner = NameFaker.Name()
+            });
+        }
+
+        private static void AddBlogFail(BlogChannel channel)
+        {
+            channel.Add(new Client.Entities.Blog());
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.ServiceModel;
 using Autofac;
 using Autofac.Integration.Wcf;
-using Business.Services;
-using Business.Services.Contracts;
 using Client.Proxies;
 using Data.Core.Infrastructure;
+using WCF.DependencyInjection.Launcher.Channel;
+using System.Reflection;
+using System.Linq;
 
 namespace WCF.DependencyInjection.Launcher
 {
@@ -13,11 +14,6 @@ namespace WCF.DependencyInjection.Launcher
         public static IContainer BuildContainer()
         {
             var builder = new ContainerBuilder();
-
-            // register services
-            builder.RegisterType<BlogService>().As<IBlogService>();
-            builder.RegisterType<ArticleService>().As<IArticleService>();
-
             // register proxies
             var channelArticle = new ChannelFactory<Client.Contracts.IArticleService>("BasicHttpBinding_IArticleService");
             builder.Register(c => channelArticle).InstancePerLifetimeScope();
@@ -27,15 +23,24 @@ namespace WCF.DependencyInjection.Launcher
             builder.RegisterType<ArticleClient>().As<Client.Contracts.IArticleService>().UseWcfSafeRelease();
             builder.RegisterType<BlogClient>().As<Client.Contracts.IBlogService>().UseWcfSafeRelease();
 
-            // Unit of Work
-            builder.RegisterType<UnitOfWork>().As<IUnitOfWork>();
-            // DbFactory
-            builder.RegisterType<DbFactory>().As<IDbFactory>();
+            builder.RegisterType<ArticleChannel>();
 
-            builder.RegisterType<ClientInjectionClass>();
+            RegisterChannel(builder);
 
             // build container
             return builder.Build();
+        }
+
+        public static void RegisterChannel(ContainerBuilder builder)
+        {
+            var instances = (from item in Assembly.GetExecutingAssembly().GetTypes()
+                             where typeof(IChannel).IsAssignableFrom(item) && item.IsClass
+                             select item);
+
+            foreach (var item in instances)
+            {
+                builder.RegisterType(item);
+            }
         }
     }
 }

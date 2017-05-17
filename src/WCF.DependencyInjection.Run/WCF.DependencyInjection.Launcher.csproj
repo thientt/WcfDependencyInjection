@@ -39,6 +39,10 @@
     <Reference Include="Autofac.Integration.Wcf">
       <HintPath>..\packages\Autofac.Wcf.4.0.0\lib\net45\Autofac.Integration.Wcf.dll</HintPath>
     </Reference>
+    <Reference Include="Faker, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Faker.1.2\lib\Faker.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -52,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="ClientInjectionClass.cs" />
+    <Compile Include="Proxies\IChannel.cs" />
+    <Compile Include="Proxies\ArticleChannel.cs" />
+    <Compile Include="Proxies\BlogChannel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -60,12 +66,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Business.Services\Business.Services.csproj">
-      <Project>{f7d3c629-c094-494b-be7e-6f5cf0b998ad}</Project>
-      <Name>Business.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Client.Contracts\Client.Contracts.csproj">
       <Project>{6385b638-3e59-4db0-bc04-1c3d6f1e7594}</Project>
       <Name>Client.Contracts</Name>

@@ -9,6 +9,7 @@ namespace Business.Entities
         [DataMember]
         public int Id { get; set; }
 
+        [IgnoreDataMember]
         public ExtensionDataObject ExtensionData { get; set; }
     }
 }

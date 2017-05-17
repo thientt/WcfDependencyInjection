@@ -10,6 +10,7 @@ namespace Data.Core.Infrastructure
         public UnitOfWork(IDbFactory dbFactory)
         {
             _dbFactory = dbFactory;
+            _context = dbFactory.Init();
         }
 
         public DIContext Context => _context ?? (_context = _dbFactory.Init());

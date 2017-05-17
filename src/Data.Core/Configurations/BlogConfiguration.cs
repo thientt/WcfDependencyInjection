@@ -7,7 +7,7 @@ namespace Data.Core.Configurations
     {
         public BlogConfiguration()
         {
-            HasKey(a => a.Id);
+            HasKey(a => a.Id).Property(a => a.Id).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None).HasColumnName("Id");
             Property(a => a.Name).IsRequired().HasMaxLength(100).HasColumnName("Name");
             Property(a => a.Owner).IsRequired().HasMaxLength(50).HasColumnName("Owner");
             Property(a => a.Url).IsRequired().HasMaxLength(200).HasColumnName("Url");
