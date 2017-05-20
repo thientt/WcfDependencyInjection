@@ -3,27 +3,26 @@ using Client.Contracts;
 using Client.Entities;
 using Client.Proxies;
 using Data.Core.Infrastructure;
-using WCF.DependencyInjection.Launcher.Channel;
 
-namespace WCF.DependencyInjection.Launcher
+namespace WCF.DependencyInjection.Launcher.Proxies
 {
-    public class ArticleChannel : Disposable, IChannel
+    public class ArticleProxy : Disposable, IProxy
     {
-        public ArticleChannel(IArticleService articleService)
+        public ArticleProxy(IArticleService articleService)
         {
-            ArticleProxy = articleService;
+            _articleProxy = articleService;
         }
 
-        public IArticleService ArticleProxy { get; private set; }
+        private readonly IArticleService _articleProxy;
 
         public Article[] GetArticles()
         {
-            return ArticleProxy.GetAll();
+            return _articleProxy.GetAll();
         }
 
         public Article GetArticleById(int id)
         {
-            return ArticleProxy.GetById(id);
+            return _articleProxy.GetById(id);
         }
 
         protected override void DisposeCore()
@@ -32,12 +31,11 @@ namespace WCF.DependencyInjection.Launcher
 
             try
             {
-                var articleClient = ArticleProxy as ArticleClient;
+                var articleClient = _articleProxy as ArticleClient;
                 articleClient?.CleanUp();
             }
             finally
             {
-                ArticleProxy = null;
             }
         }
     }
