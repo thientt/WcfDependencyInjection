@@ -6,4 +6,4 @@ script:
   - xbuild /p:Configuration=Release src/WcfDependencyInjection.sln
 group: stable
 dist: precise
-os: window
+os: linux
