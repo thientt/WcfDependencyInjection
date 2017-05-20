@@ -1,0 +1,12 @@
+anguage: csharp
+mono: none
+dotnet: 4.5.1
+dist: trusty
+solution: WcfDependencyInjection.sln
+script:    # the following commands are just examples, use whatever your build process requires
+  - ./build.sh
+  - ./test.sh
+  - grep "Test Results" build.log
+ install:
+  - sudo apt-get install -y gtk-sharp2
+  - nuget restore WcfDependencyInjection.sln
