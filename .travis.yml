@@ -1,6 +1,6 @@
 language: csharp
-solution: WcfDependencyInjection.sln
+solution: src/WcfDependencyInjection.sln
 install:
-  - nuget restore WcfDependencyInjection.sln
+  - nuget restore src/WcfDependencyInjection.sln
 script:
-  - xbuild /p:Configuration=Release WcfDependencyInjection.sln
+  - xbuild /p:Configuration=Release src/WcfDependencyInjection.sln
