@@ -4,3 +4,6 @@ install:
   - nuget restore src/WcfDependencyInjection.sln
 script:
   - xbuild /p:Configuration=Release src/WcfDependencyInjection.sln
+group: stable
+dist: precise
+os: window
