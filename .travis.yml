@@ -1,6 +1,6 @@
 language: csharp
 solution: WcfDependencyInjection.sln
-before_install:
-  - sudo apt-get install nunit-console
-before_script:
-  - nuget restore MTAServiceStatus.sln
+install:
+  - nuget restore WcfDependencyInjection.sln
+script:
+  - xbuild /p:Configuration=Release WcfDependencyInjection.sln
