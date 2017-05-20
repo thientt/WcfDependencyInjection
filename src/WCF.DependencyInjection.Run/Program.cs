@@ -1,6 +1,6 @@
 ﻿using System;
 using Autofac;
-using WCF.DependencyInjection.Launcher.Channel;
+using WCF.DependencyInjection.Launcher.Proxies;
 using Faker;
 
 namespace WCF.DependencyInjection.Launcher
@@ -11,26 +11,24 @@ namespace WCF.DependencyInjection.Launcher
         {
             //Register IoC
             var builder = Bootstrapper.BuildContainer();
-            var blogChannel = builder.Resolve<BlogChannel>();
-            AddBlog(blogChannel);
+            var blogChannel = builder.Resolve<BlogProxy>();
+            for (var i = 1; i < 1000; i++)
+            {
+                AddBlog(blogChannel, i);
+            }
 
             Console.Read();
         }
 
-        private static void AddBlog(BlogChannel channel)
+        private static void AddBlog(BlogProxy channel, int id)
         {
             channel.Add(new Client.Entities.Blog
             {
                 Url = InternetFaker.Url(),
-                Id = NumberFaker.Number(3, 1000),
+                Id = id,
                 Name = NameFaker.Name(),
                 Owner = NameFaker.Name()
             });
-        }
-
-        private static void AddBlogFail(BlogChannel channel)
-        {
-            channel.Add(new Client.Entities.Blog());
         }
     }
 }

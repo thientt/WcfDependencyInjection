@@ -1,11 +1,11 @@
-﻿using System.ServiceModel;
+﻿using System.Linq;
+using System.Reflection;
+using System.ServiceModel;
 using Autofac;
 using Autofac.Integration.Wcf;
+using Client.Contracts;
 using Client.Proxies;
-using Data.Core.Infrastructure;
-using WCF.DependencyInjection.Launcher.Channel;
-using System.Reflection;
-using System.Linq;
+using WCF.DependencyInjection.Launcher.Proxies;
 
 namespace WCF.DependencyInjection.Launcher
 {
@@ -15,15 +15,11 @@ namespace WCF.DependencyInjection.Launcher
         {
             var builder = new ContainerBuilder();
             // register proxies
-            var channelArticle = new ChannelFactory<Client.Contracts.IArticleService>("BasicHttpBinding_IArticleService");
-            builder.Register(c => channelArticle).InstancePerLifetimeScope();
-            var channelBlog = new ChannelFactory<Client.Contracts.IBlogService>("BasicHttpBinding_IBlogService");
-            builder.Register(c => channelBlog).InstancePerLifetimeScope();
+            builder.Register(c => new ChannelFactory<IArticleService>("BasicHttpBinding_IArticleService")).InstancePerLifetimeScope();
+            builder.Register(c => new ChannelFactory<IBlogService>("BasicHttpBinding_IBlogService")).InstancePerLifetimeScope();
 
-            builder.RegisterType<ArticleClient>().As<Client.Contracts.IArticleService>().UseWcfSafeRelease();
-            builder.RegisterType<BlogClient>().As<Client.Contracts.IBlogService>().UseWcfSafeRelease();
-
-            builder.RegisterType<ArticleChannel>();
+            builder.RegisterType<ArticleClient>().As<IArticleService>().UseWcfSafeRelease();
+            builder.RegisterType<BlogClient>().As<IBlogService>().UseWcfSafeRelease();
 
             RegisterChannel(builder);
 
@@ -33,14 +29,11 @@ namespace WCF.DependencyInjection.Launcher
 
         public static void RegisterChannel(ContainerBuilder builder)
         {
-            var instances = (from item in Assembly.GetExecutingAssembly().GetTypes()
-                             where typeof(IChannel).IsAssignableFrom(item) && item.IsClass
-                             select item);
-
-            foreach (var item in instances)
-            {
-                builder.RegisterType(item);
-            }
+            (from item in Assembly.GetExecutingAssembly().GetTypes()
+             where typeof(IProxy).IsAssignableFrom(item) &&
+                   item.IsClass && item.IsPublic &&
+                   !(item.FullName.StartsWith("mscorlib") || item.FullName.StartsWith("System"))
+             select item).ToList().ForEach(ins => builder.RegisterType(ins));
         }
     }
 }

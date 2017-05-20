@@ -4,13 +4,13 @@ using Client.Entities;
 using Client.Proxies;
 using Data.Core.Infrastructure;
 
-namespace WCF.DependencyInjection.Launcher.Channel
+namespace WCF.DependencyInjection.Launcher.Proxies
 {
-    public class BlogChannel : Disposable, IChannel
+    public class BlogProxy : Disposable, IProxy
     {
         private IBlogService _blogService;
 
-        public BlogChannel(IBlogService blogService)
+        public BlogProxy(IBlogService blogService)
         {
             _blogService = blogService;
         }

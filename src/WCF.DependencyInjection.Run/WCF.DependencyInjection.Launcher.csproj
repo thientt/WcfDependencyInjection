@@ -56,9 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Proxies\IChannel.cs" />
-    <Compile Include="Proxies\ArticleChannel.cs" />
-    <Compile Include="Proxies\BlogChannel.cs" />
+    <Compile Include="Proxies\IProxy.cs" />
+    <Compile Include="Proxies\ArticleProxy.cs" />
+    <Compile Include="Proxies\BlogProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
