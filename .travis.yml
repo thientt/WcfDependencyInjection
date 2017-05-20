@@ -3,4 +3,4 @@ solution: src/WcfDependencyInjection.sln
 install:
   - nuget restore src/WcfDependencyInjection.sln
 script:
-  - xbuild /p:Configuration=Release src/WcfDependencyInjection.sln
+  - xbuild /p:Configuration=Release WcfDependencyInjection.sln
