@@ -4,6 +4,3 @@ before_install:
   - sudo apt-get install nunit-console
 before_script:
   - nuget restore MTAServiceStatus.sln
- install:
-  - sudo apt-get install -y gtk-sharp2
-  - nuget restore WcfDependencyInjection.sln
